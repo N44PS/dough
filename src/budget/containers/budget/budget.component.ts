@@ -9,20 +9,7 @@ import { Month } from "../../models/month.model";
 @Component({
   selector: "budget",
   styleUrls: ["budget.component.scss"],
-  template: `
-    <div class="budget">
-      <h2 class="budget__month">{{(currentMonth$ | async).name}}</h2>
-      <div class="budget__list">
-        <div *ngIf="!((categories$ | async)?.length)" class="budget__placeholder">
-          No categories
-        </div>
-        <category
-          *ngFor="let category of (categories$ | async)"
-          [category]="category">
-        </category>
-      </div>
-    </div>
-  `
+  templateUrl: "./budget.component.html"
 })
 export class BudgetComponent implements OnInit {
   categories$: Observable<Category[]>;

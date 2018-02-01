@@ -1,0 +1,20 @@
+<div class="backdrop" [ngClass]="{'backdrop--isShown': (modal$ | async).isOpen }"></div>
+<div class="modal" [ngClass]="{'modal--isOpen': (modal$ | async).isOpen }">
+    <div class="modal__body">
+        <div class="modal__header">
+            <h4 class="entry__name">{{(entry$ | async).label}}</h4>
+        </div>
+        <div class="modal__content">
+            <input type="number " [(ngModel)]="valueToAdd" />
+        </div>
+        <div class="modal__footer">
+            <button>
+                <icon name="plus-circle"></icon>
+                Ajouter
+            </button>
+        </div>
+        <button class="modal__close" (click)="close()">
+            <icon name="x"></icon>
+        </button>
+    </div>
+</div>

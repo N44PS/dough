@@ -1,14 +1,17 @@
 import * as fromCategories from "../actions/categories.action";
 import { Category } from "../../models/category.model";
+import { Entry } from "../../models/entry.model";
 
 export interface CategoryState {
   entities: { [id: number]: Category };
+  currentEntry: Entry;
   loaded: boolean;
   loading: boolean;
 }
 
 export const initialState: CategoryState = {
   entities: {},
+  currentEntry: {},
   loaded: false,
   loading: false
 };
@@ -53,6 +56,14 @@ export function reducer(
         ...state,
         loading: false,
         loaded: false
+      };
+    }
+
+    case fromCategories.SET_CURRENT_ENTRY: {
+      const currentEntry = action.payload;
+      return {
+        ...state,
+        currentEntry
       };
     }
   }

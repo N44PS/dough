@@ -1,0 +1,22 @@
+i {
+  width: 100%;
+  height: 100%;
+}
+
+:host {
+  color: inherit;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  color: #666369;
+  ::ng-deep {
+    * {
+      color: inherit;
+    }
+    svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

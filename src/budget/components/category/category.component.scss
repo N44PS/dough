@@ -2,18 +2,30 @@
   display: block;
   overflow: hidden;
   &:not(:last-child) {
-    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
   }
 }
 
+:host {
+  display: block;
+  overflow: hidden;
+}
+
 .category {
+  padding: 20px 0 10px;
   &__name {
     margin: 0 20px 5px;
-    color: #999;
-    font-size: 12px;
+    color: #bbb;
+    font-size: 10px;
     text-transform: uppercase;
     justify-content: space-between;
     display: flex;
+  }
+  &__total {
+    color: white;
+    border-radius: 20px;
+    padding: 0 5px;
+    display: inline-block;
   }
   &__entries {
     overflow-x: scroll;

@@ -1,4 +1,11 @@
-import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  HostListener
+} from "@angular/core";
+import { Store } from "@ngrx/store";
+import * as fromStore from "../../store";
 
 import { Entry } from "../../models/entry.model";
 
@@ -6,14 +13,17 @@ import { Entry } from "../../models/entry.model";
   selector: "entry",
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ["entry.component.scss"],
-  template: `
-    <h4 class="entry__name">{{entry.label}}</h4>
-    <h2 [style.color]="!isExpense ? '#78e08f' : '#e55039'">
-      {{entry.value}}€
-    </h2>
-  `
+  templateUrl: "./entry.component.html"
 })
 export class EntryComponent {
   @Input() entry: Entry;
   @Input() isExpense: boolean = true;
+
+  constructor(private store: Store<fromStore.BudgetState>) {}
+
+  @HostListener("click", ["$event"])
+  onClick(e) {
+    this.store.dispatch(new fromStore.SetCurrentEntry(this.entry));
+    this.store.dispatch(new fromStore.toggleModalState());
+  }
 }
