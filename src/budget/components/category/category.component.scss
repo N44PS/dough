@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  overflow: hidden;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.category {
+  &__name {
+    margin: 0 20px 5px;
+    color: #999;
+    font-size: 12px;
+    text-transform: uppercase;
+    justify-content: space-between;
+    display: flex;
+  }
+  &__entries {
+    overflow-x: scroll;
+  }
+  &__inner {
+    display: flex;
+    flex-direction: row;
+  }
+}
