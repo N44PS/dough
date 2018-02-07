@@ -1,20 +1,20 @@
-<div class="backdrop" [ngClass]="{'backdrop--isShown': (modal$ | async).isOpen }"></div>
-<div class="modal" [ngClass]="{'modal--isOpen': (modal$ | async).isOpen }">
-    <div class="modal__body">
-        <div class="modal__header">
-            <h4 class="entry__name">{{(entry$ | async).label}}</h4>
-        </div>
-        <div class="modal__content">
-            <input type="number " [(ngModel)]="valueToAdd" />
-        </div>
-        <div class="modal__footer">
-            <button>
-                <icon name="plus-circle"></icon>
-                Ajouter
-            </button>
-        </div>
-        <button class="modal__close" (click)="close()">
-            <icon name="x"></icon>
-        </button>
+<div class="backdrop" [ngClass]="{'backdrop--isShown': (modal$ | async) }"></div>
+<div class="modal" [ngClass]="{'modal--isOpen': (modal$ | async) }">
+  <div class="entry__modes">
+    <div class="entry__mode" (click)="setMode(mode)" *ngFor="let mode of [ 'Add', 'Remove', 'Reset']" [class.entry__mode--active]="(entryMode$ | async) === mode">
+      {{mode}}
     </div>
+  </div>
+  <div class="modal__body">
+    <div class="modal__entry entry">
+      <h4 class="entry__name">{{(entry$ | async).label}}</h4>
+      <span class="entry__cost">{{(entry$ | async).value}}€</span>
+    </div>
+    <div class="modal__form">
+      <input class="modal__input" placeholder="0" type="number" [(ngModel)]="valueToAdd" />
+      <button class="modal__button" (click)="changeEntry()">
+        <icon class="modal__button-icon" [name]="(entryMode$ | async) | lowercase"></icon>
+      </button>
+    </div>
+  </div>
 </div>

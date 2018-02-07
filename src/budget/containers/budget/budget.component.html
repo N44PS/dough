@@ -14,15 +14,6 @@
         </div>
         <category *ngFor="let category of (categories$ | async)" [category]="category"></category>
     </div>
-    <div class="budget__footer">
-        <button class="budget__button">
-            <icon name="chevron-left"></icon>
-        </button>
-        <h1 class="budget__month">{{(currentMonth$ | async).name}}</h1>
-        <button class="budget__button">
-            <icon name="chevron-right"></icon>
-        </button>
-    </div>
 </div>
 
 <modal></modal>
