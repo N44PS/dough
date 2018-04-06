@@ -20,7 +20,7 @@ export class ModalComponent {
     modal$: Observable<boolean>;
     entry$: Observable<Entry>;
     entryMode$: Observable<EntryMode>;
-    valueToAdd: number;
+    value: number;
 
     constructor(
         private store: Store<fromStore.BudgetState>,
@@ -46,5 +46,9 @@ export class ModalComponent {
 
     setMode(mode: EntryMode) {
         this.store.dispatch(new fromStore.setEntryMode(mode));
+    }
+
+    changeEntry() {
+        this.store.dispatch(new fromStore.UpdateEntry(this.value));
     }
 }

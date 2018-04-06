@@ -11,7 +11,7 @@
       <span class="entry__cost">{{(entry$ | async).value}}€</span>
     </div>
     <div class="modal__form">
-      <input class="modal__input" placeholder="0" type="number" [(ngModel)]="valueToAdd" />
+      <input class="modal__input" placeholder="0" type="number" [(ngModel)]="value" />
       <button class="modal__button" (click)="changeEntry()">
         <icon class="modal__button-icon" [name]="(entryMode$ | async) | lowercase"></icon>
       </button>
