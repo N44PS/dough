@@ -1,17 +1,21 @@
 language: node_js
 node_js:
-  - '8.9.1'
+  - "8"
+dist: trusty
+sudo: false
 
-branches:
-  only:
-    - master
+cache:
+  directories:
+    - node_modules
 
+addons:
+  chrome: stable
 before_script:
   - npm install -g firebase-tools
   - npm install -g @angular/cli
-
+  
 script:
-  - npm run pwa
+  - xvfb-run npm run pwa
 
 after_success:
   - firebase deploy - project dough-4f780 - token $FIREBASE_TOKEN.
