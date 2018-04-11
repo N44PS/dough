@@ -15,6 +15,7 @@ script:
 - xvfb-run npm run pwa
 
 deploy:
+  skip_cleanup: true
   provider: firebase
   token:
     secure: vqOW8non1QtRn5ifpmW2JT/A+cEGNeBopw8+x++9KaCFCPujct5IuvfGe2W1iyaFh6IyhltKKxgp0HB2AWkZeT1n0Ghb/Z8D9/iWqeecLYIekhLkMVlN+9yv00yXw3WO0ePImtemNgLFq/9CUMq6wkgvmu31fVbRTTp2oboERirW+rIDikWvKRVTNeHNX/8cgJxNvfYBpPIeUh9WTZBHjZXI9b56eUDRoPS9JwUxe2x2k3Vl9i6pfKrUZdzvdwnIodEh8P54Ka/hAbGx/nsflzC2Vb0m9GNmLLMekc2uoUbWfFVelhuvUd4OQPoW0SavGYAYnAOt7DG88ubJT5+A37+74pD2qgUDv33k1l/y0uXJfeHvNLI+qW4AI2W4N5du/WCnGqJtXUSxs8LVN9t+i9FxaDeph4lIZuq+IvncRvgxoXPKINfXEYg/IpSYoLs9ztt/uti9WX0ci+d5cHdL81ClKGiGcqxWSNwcj5mcWbBxtI4PKnVojph+3xZgB6v/saPM9EVTSy8fjsycax2w8OXKB52UdIlmKNxNTIt4fPCsH4flNB4Dvhho0knbKr5p3DBHDfufTETDWp/IRG4Ky6n5cBTlGW1HkO8KBGPkoWA2Y+nI7qqrKgI5lHoG+puSaI38GlCSosGrZkxwfNhGefw8EYjr5wSKILnUwb+lnl0=
