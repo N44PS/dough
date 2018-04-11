@@ -17,13 +17,19 @@ import { Entry } from "../../models/entry.model";
 })
 export class EntryComponent {
   @Input() entry: Entry;
+  @Input() categoryId: number;
   @Input() isExpense: boolean = true;
 
   constructor(private store: Store<fromStore.BudgetState>) {}
 
   @HostListener("click", ["$event"])
   onClick(e) {
-    this.store.dispatch(new fromStore.SetCurrentEntry(this.entry));
+    this.store.dispatch(
+      new fromStore.SetCurrentEntry({
+        ...this.entry,
+        categoryId: this.categoryId
+      })
+    );
     this.store.dispatch(new fromStore.toggleModalState());
   }
 }

@@ -1,18 +1,23 @@
 <div class="budget">
     <div class="budget__header">
-        <button class="budget__button">
+        <button class="budget__button" (click)="changeMonth(prevMonth)" [disabled]="!prevMonth">
             <icon name="chevron-left"></icon>
         </button>
         <h1 class="budget__month">{{(currentMonth$ | async).name}}</h1>
-        <button class="budget__button">
+        <button class="budget__button" (click)="changeMonth(nextMonth)" [disabled]="!nextMonth">
             <icon name="chevron-right"></icon>
         </button>
     </div>
     <div class="budget__list">
         <div *ngIf="!((categories$ | async)?.length)" class="budget__placeholder">
-            No categories...
+            Loading...
+        </div>
+        <div class="budget__status" *ngIf="(categories$ | async)?.length">
+            <h2>{{(status$ | async).balance | currency:'EUR'}}</h2>
+            <h4 [style.color]="(status$ | async).netIncome >= 0 ? '#78e08f' : '#e55039'">({{(status$ | async).netIncome | currency:'EUR'}})</h4>
         </div>
         <category *ngFor="let category of (categories$ | async)" [category]="category"></category>
+        <div [class.budget__loader--isShown]="isLoading" class="budget__loader"></div>
     </div>
 </div>
 

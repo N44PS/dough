@@ -1,8 +1,9 @@
-export type EntryMode = 'Add' | 'Remove' | 'Reset';
+export type EntryMode = "Add" | "Remove" | "Reset";
 
 export interface Entry {
-    id?: string;
-    label?: string;
-    value?: string;
-    numericValue?: number;
+  id?: string;
+  label?: string;
+  value?: string;
+  categoryId?: number;
+  numericValue?: number;
 }

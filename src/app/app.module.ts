@@ -1,7 +1,12 @@
-import { NgModule } from "@angular/core";
+import { NgModule, LOCALE_ID } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { Routes, RouterModule } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/fr";
+registerLocaleData(localeFr, "fr");
+
 import {
   StoreRouterConnectingModule,
   RouterStateSerializer
@@ -47,7 +52,10 @@ export const ROUTES: Routes = [
     StoreRouterConnectingModule,
     environment.development ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
+  providers: [
+    { provide: RouterStateSerializer, useClass: CustomSerializer },
+    { provide: LOCALE_ID, useValue: "fr-FR" }
+  ],
   declarations: [AppComponent],
   bootstrap: [AppComponent]
 })

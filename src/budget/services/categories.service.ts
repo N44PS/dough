@@ -12,17 +12,29 @@ import { environment } from "../../environments/environment";
 
 @Injectable()
 export class CategoriesService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getCategories(monthId: number): Observable<{ categories: Category[]; totalExpenses: number }> {
+  getCategories(
+    monthId: number
+  ): Observable<{
+    categories: Category[];
+    totalIncome: number;
+    totalExpenses: number;
+    netIncome: number;
+    balance: number;
+  }> {
     return this.http
       .get(`${environment.apiUrl}/cells/${monthId}`)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 
-  updateEntry(batchId: string, value: number, method: string): Observable<Entry> {
+  updateEntry(
+    batchId: string,
+    value: number,
+    method: string
+  ): Observable<Entry> {
     return this.http
-      .put(`${environment.apiUrl}/cells/${batchId}`, { value, method })
+      .put(`${environment.apiUrl}/cell/${batchId}`, { value, method })
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 }

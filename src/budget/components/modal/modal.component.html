@@ -8,12 +8,12 @@
   <div class="modal__body">
     <div class="modal__entry entry">
       <h4 class="entry__name">{{(entry$ | async).label}}</h4>
-      <span class="entry__cost">{{(entry$ | async).value}}€</span>
+      <span class="entry__cost">{{(entry$ | async).numericValue | currency:'EUR'}}</span>
     </div>
     <div class="modal__form">
-      <input class="modal__input" placeholder="0" type="number" [(ngModel)]="value" />
-      <button class="modal__button" (click)="changeEntry()">
-        <icon class="modal__button-icon" [name]="(entryMode$ | async) | lowercase"></icon>
+      <input class="modal__input" placeholder="0" type="number" [(ngModel)]="value" [disabled]="isLoading" />
+      <button class="modal__button" (click)="changeEntry()" [disabled]="isLoading">
+        <icon class="modal__button-icon" [class.modal__button-icon--loading]="isLoading" [name]="isLoading ? 'loader' : (entryMode$ | async) | lowercase"></icon>
       </button>
     </div>
   </div>

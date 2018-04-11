@@ -1,4 +1,4 @@
 <h4 class="entry__name">{{entry.label}}</h4>
-<span class="entry__cost" [style.color]="!isExpense ? '#78e08f' : '#e55039'">
-    {{entry.value}}€
+<span class="entry__cost" [style.color]="entry.numericValue !== 0 ? (!isExpense ? '#78e08f' : '#e55039') : '#dddddd'">
+    {{entry.numericValue | currency:'EUR'}}
 </span>

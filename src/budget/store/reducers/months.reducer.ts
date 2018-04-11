@@ -70,6 +70,20 @@ export function reducer(
 }
 
 export const getCurrentMonth = (state: MonthState) => state.currentMonth;
+export const getNextMonth = (state: MonthState) => {
+  const months = <Month[]>Object.values(state.entities);
+  const nextMonth = months.find(
+    month => month.id === state.currentMonth.id + 1
+  );
+  return nextMonth;
+};
+export const getPrevMonth = (state: MonthState) => {
+  const months = <Month[]>Object.values(state.entities);
+  const prevMonth = months.find(
+    month => month.id === state.currentMonth.id - 1
+  );
+  return prevMonth;
+};
 export const getMonthsEntities = (state: MonthState) => state.entities;
 export const getMonthsLoading = (state: MonthState) => state.loading;
 export const getMonthsLoaded = (state: MonthState) => state.loaded;

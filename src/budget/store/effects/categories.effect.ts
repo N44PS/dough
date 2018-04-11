@@ -5,7 +5,8 @@ import { Store } from "@ngrx/store";
 import { of } from "rxjs/observable/of";
 import { map, switchMap, catchError, withLatestFrom } from "rxjs/operators";
 
-import * as categoryActions from "../actions/categories.action";
+import * as categoriesActions from "../actions/categories.action";
+import * as UiActions from "../actions/ui.action";
 import * as fromServices from "../../services";
 import * as fromReducers from "../reducers";
 
@@ -15,41 +16,64 @@ export class CategoriesEffects {
     private actions$: Actions,
     private categoriesService: fromServices.CategoriesService,
     private store$: Store<fromReducers.BudgetState>
-  ) { }
+  ) {}
 
   @Effect()
-  loadCategories$ = this.actions$.ofType(categoryActions.LOAD_CATEGORIES).pipe(
-    switchMap((action: categoryActions.LoadCategories) => {
+  loadCategories$ = this.actions$
+    .ofType(categoriesActions.LOAD_CATEGORIES)
+    .pipe(
+      switchMap((action: categoriesActions.LoadCategories) => {
+        return this.categoriesService
+          .getCategories(action.payload)
+          .pipe(
+            map(
+              categories =>
+                new categoriesActions.LoadCategoriesSuccess(categories)
+            ),
+            catchError(error =>
+              of(new categoriesActions.LoadCategoriesFail(error))
+            )
+          );
+      })
+    );
+
+  @Effect()
+  updateCategories = this.actions$
+    .ofType(categoriesActions.RELOAD_CATEGORIES)
+    .pipe(
+      switchMap((action: categoriesActions.LoadCategories) => {
+        return this.categoriesService
+          .getCategories(action.payload)
+          .pipe(
+            switchMap(categories => [
+              new categoriesActions.LoadCategoriesSuccess(categories),
+              new categoriesActions.UpdateEntrySuccess(),
+              new UiActions.toggleModalState()
+            ]),
+            catchError(error =>
+              of(new categoriesActions.LoadCategoriesFail(error))
+            )
+          );
+      })
+    );
+
+  @Effect()
+  updateEntry$ = this.actions$.ofType(categoriesActions.UPDATE_ENTRY).pipe(
+    map((action: categoriesActions.ReloadCategories) => action.payload),
+    withLatestFrom(
+      this.store$.select(fromReducers.getCurrentEntry),
+      this.store$.select(fromReducers.getEntryMode),
+      this.store$.select(fromReducers.getCurrentMonth)
+    ),
+    switchMap(([action, currentEntry, mode, month]) => {
       return this.categoriesService
-        .getCategories(action.payload)
+        .updateEntry(currentEntry.id, action, mode)
         .pipe(
-        map(
-          categories => new categoryActions.LoadCategoriesSuccess(categories)
-        ),
-        catchError(error => of(new categoryActions.LoadCategoriesFail(error)))
+          switchMap(entry => [
+            new categoriesActions.ReloadCategories(month.id)
+          ]),
+          catchError(error => of(new categoriesActions.UpdateEntryFail(error)))
         );
     })
   );
-
-
-  // GET STORE VALUE TO PROPERLY CALL SERVICE & UPDATE ENTRY
-  @Effect()
-  updateEntry$ = this.actions$.ofType(categoryActions.UPDATE_ENTRY).pipe(
-    withLatestFrom(this.store$.select(fromReducers.getCurrentEntry)),
-    withLatestFrom(this.store$.select(fromReducers.getEntryMode),
-      ([action, currentEntry], mode) => {
-        return new Array([action, currentEntry, mode]);
-      }),
-    switchMap(([action, currentEntry, mode]) => {
-      console.log("updateEntry", action, currentEntry.id, mode);
-      return this.categoriesService
-        .updateEntry(currentEntry.id, action.payload, mode)
-        .pipe(
-        map(
-          entry => new categoryActions.UpdateEntrySuccess(entry)
-        ),
-        catchError(error => of(new categoryActions.UpdateEntryFail(error)))
-        );
-    })
-  )
 }

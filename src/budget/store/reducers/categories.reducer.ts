@@ -5,7 +5,10 @@ import { Entry } from "../../models/entry.model";
 export interface CategoryState {
   entities: { [id: number]: Category };
   currentEntry: Entry;
+  totalIncome: number;
   totalExpenses: number;
+  netIncome: number;
+  balance: number;
   loaded: boolean;
   loading: boolean;
 }
@@ -13,7 +16,10 @@ export interface CategoryState {
 export const initialState: CategoryState = {
   entities: {},
   currentEntry: {},
+  totalIncome: 0,
   totalExpenses: 0,
+  netIncome: 0,
+  balance: 0,
   loaded: false,
   loading: false
 };
@@ -31,7 +37,13 @@ export function reducer(
     }
 
     case fromCategories.LOAD_CATEGORIES_SUCCESS: {
-      const { categories, totalExpenses } = action.payload;
+      const {
+        categories,
+        totalExpenses,
+        netIncome,
+        balance,
+        totalIncome
+      } = action.payload;
       const entities = categories.reduce(
         (entities: { [id: number]: Category }, category: Category) => {
           return {
@@ -47,6 +59,9 @@ export function reducer(
       return {
         ...state,
         totalExpenses,
+        netIncome,
+        balance,
+        totalIncome,
         loading: false,
         loaded: true,
         entities
@@ -77,12 +92,7 @@ export function reducer(
     }
 
     case fromCategories.UPDATE_ENTRY_SUCCESS: {
-      const updatedEntry = action.payload;
-      return {
-        ...state,
-        currentEntry: updatedEntry,
-        loading: false
-      };
+      return { ...state, currentEntry: {}, loaded: true };
     }
 
     case fromCategories.UPDATE_ENTRY_FAIL: {
